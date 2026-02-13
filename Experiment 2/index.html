@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MyShop E-Commerce</title>
+
+<style>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial;
+}
+
+body{
+background:#f1f3f6;
+}
+
+nav{
+background:#2874f0;
+color:white;
+padding:15px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+flex-wrap:wrap;
+}
+
+nav h1{
+font-size:22px;
+}
+
+nav button{
+background:white;
+border:none;
+padding:6px 12px;
+margin-left:10px;
+cursor:pointer;
+border-radius:3px;
+}
+
+.container{
+padding:20px;
+}
+
+.card-container{
+display:flex;
+flex-wrap:wrap;
+gap:20px;
+}
+
+.card{
+background:white;
+width:220px;
+border-radius:8px;
+box-shadow:0 4px 8px rgba(0,0,0,0.1);
+overflow:hidden;
+transition:0.3s;
+}
+
+.card:hover{
+transform:scale(1.05);
+}
+
+.card img{
+width:100%;
+height:160px;
+object-fit:cover;
+}
+
+.card-content{
+padding:10px;
+}
+
+.price{
+color:green;
+font-weight:bold;
+margin:5px 0;
+}
+
+button.buy{
+background:#ff9f00;
+border:none;
+padding:8px;
+width:100%;
+cursor:pointer;
+border-radius:4px;
+}
+
+button.buy:hover{
+background:#fb641b;
+color:white;
+}
+
+.section{
+margin-top:30px;
+}
+
+input{
+width:100%;
+padding:8px;
+margin:8px 0;
+}
+
+.hidden{
+display:none;
+}
+
+.cart-box, .admin-box{
+background:white;
+padding:20px;
+margin-top:20px;
+border-radius:8px;
+}
+
+footer{
+text-align:center;
+padding:15px;
+background:#2874f0;
+color:white;
+margin-top:40px;
+}
+
+@media(max-width:768px){
+.card{
+width:100%;
+}
+}
+</style>
+</head>
+
+<body>
+
+<nav>
+<h1>MyShop</h1>
+<div>
+<button onclick="showSection('home')">Home</button>
+<button onclick="showSection('login')">Login</button>
+<button onclick="showSection('cart')">Cart</button>
+<button onclick="showSection('admin')">Admin</button>
+</div>
+</nav>
+
+<div class="container">
+
+<!-- HOME -->
+<div id="home">
+
+<h2>🛒 Products</h2>
+<div class="card-container" id="productList"></div>
+
+<h2 class="section">🏨 Hotel Booking</h2>
+
+<div class="card">
+<img src="https://images.unsplash.com/photo-1566073771259-6a8506099945" alt="Hotel">
+<div class="card-content">
+<h3>Luxury Hotel</h3>
+<p class="price">₹3000 / night</p>
+<input type="date" id="checkin">
+<input type="date" id="checkout">
+<button class="buy" onclick="bookHotel()">Book Now</button>
+</div>
+</div>
+
+</div>
+
+<!-- LOGIN -->
+<div id="login" class="hidden">
+<h2>Login / Signup</h2>
+<input type="text" placeholder="Username">
+<input type="password" placeholder="Password">
+<button class="buy">Login</button>
+<button class="buy">Signup</button>
+</div>
+
+<!-- CART -->
+<div id="cart" class="hidden">
+<h2>Your Cart</h2>
+<div class="cart-box">
+<ul id="cartItems"></ul>
+<h3>Total: ₹<span id="total">0</span></h3>
+<button class="buy" onclick="showSection('payment')">Proceed to Payment</button>
+</div>
+</div>
+
+<!-- PAYMENT -->
+<div id="payment" class="hidden">
+<h2>Payment Page</h2>
+<input type="text" placeholder="Card Number">
+<input type="text" placeholder="Card Holder Name">
+<input type="text" placeholder="Expiry Date">
+<input type="text" placeholder="CVV">
+<button class="buy" onclick="alert('Payment Successful!')">Pay Now</button>
+</div>
+
+<!-- ADMIN -->
+<div id="admin" class="hidden">
+<h2>Admin Dashboard</h2>
+<div class="admin-box">
+<ul>
+<li>Total Products: 50</li>
+<li>Total Orders: 12</li>
+<li>Total Revenue: ₹2,40,000</li>
+</ul>
+</div>
+</div>
+
+</div>
+
+<footer>
+© 2026 MyShop E-Commerce Website
+</footer>
+
+<script>
+
+let total = 0;
+
+/* Base Products */
+const baseProducts = [
+{name:"Smartphone", price:15000, img:"https://images.unsplash.com/photo-1511707171634-5f897ff02aa9"},
+{name:"Laptop", price:55000, img:"https://images.unsplash.com/photo-1517336714731-489689fd1ca8"},
+{name:"Smart Watch", price:3500, img:"https://images.unsplash.com/photo-1516574187841-cb9cc2ca948b"},
+{name:"Camera", price:25000, img:"https://images.unsplash.com/photo-1516035069371-29a1b244cc32"},
+{name:"Shoes", price:1800, img:"https://images.unsplash.com/photo-1542291026-7eec264c27ff"},
+{name:"Keyboard", price:1500, img:"https://images.unsplash.com/photo-1519389950473-47ba0277781c"},
+{name:"Bluetooth Speaker", price:2500, img:"https://images.unsplash.com/photo-1507874457470-272b3c8d8ee2"}
+];
+
+/* Generate 50 Products */
+let products = [];
+while(products.length < 50){
+let item = baseProducts[products.length % baseProducts.length];
+products.push({
+name: item.name + " " + (products.length+1),
+price: item.price + (products.length*50),
+img: item.img
+});
+}
+
+/* Display Products */
+const productList = document.getElementById("productList");
+
+products.forEach(product => {
+let card = document.createElement("div");
+card.classList.add("card");
+
+card.innerHTML = `
+<img src="${product.img}" alt="${product.name}">
+<div class="card-content">
+<h3>${product.name}</h3>
+<p class="price">₹${product.price}</p>
+<button class="buy" onclick="addToCart('${product.name}',${product.price})">Add to Cart</button>
+</div>
+`;
+
+productList.appendChild(card);
+});
+
+/* Add to Cart */
+function addToCart(name, price){
+let li = document.createElement("li");
+li.innerHTML = name + " - ₹" + price + 
+` <button onclick="removeItem(this,${price})" style="background:red;color:white;border:none;padding:2px 6px;margin-left:10px;">X</button>`;
+document.getElementById("cartItems").appendChild(li);
+
+total += price;
+document.getElementById("total").textContent = total;
+}
+
+/* Remove Item */
+function removeItem(button, price){
+button.parentElement.remove();
+total -= price;
+document.getElementById("total").textContent = total;
+}
+
+/* Navigation */
+function showSection(id){
+document.getElementById("home").classList.add("hidden");
+document.getElementById("login").classList.add("hidden");
+document.getElementById("cart").classList.add("hidden");
+document.getElementById("payment").classList.add("hidden");
+document.getElementById("admin").classList.add("hidden");
+
+document.getElementById(id).classList.remove("hidden");
+}
+
+/* Hotel Booking */
+function bookHotel(){
+let checkin=document.getElementById("checkin").value;
+let checkout=document.getElementById("checkout").value;
+if(checkin && checkout){
+alert("Hotel booked from "+checkin+" to "+checkout);
+}else{
+alert("Please select dates");
+}
+}
+
+</script>
+
+</body>
+</html>

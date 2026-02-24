@@ -3,89 +3,165 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jyotshna Shree - Portfolio</title>
+    <title>Product Store - Book & Purchase</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <!-- Header Section -->
+    <!-- Header -->
     <header>
         <div class="container">
-            <div class="profile-section">
-                <img src="Experiment 1/Jyotshna.jpg" alt="Jyotshna Shree" class="profile-image">
-                <h1>Jyotshna Shree</h1>
-                <p class="tagline">Web Developer | Machine Learning Enthusiast</p>
+            <div class="logo">
+                <h1>ProductStore</h1>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#products">Products</a></li>
+                    <li><a href="#booking">Book Now</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+            <div class="cart-icon">
+                <span>🛒 Cart: <span id="cart-count">0</span></span>
             </div>
         </div>
     </header>
 
-    <!-- Navigation -->
-    <nav>
+    <!-- Hero Section -->
+    <section id="home" class="hero">
         <div class="container">
-            <ul>
-                <li><a href="#about">About</a></li>
-                <li><a href="#skills">Skills</a></li>
-                <li><a href="#education">Education</a></li>
-                <li><a href="#projects">Projects</a></li>
-                <li><a href="#contact">Contact</a></li>
-            </ul>
-        </div>
-    </nav>
-
-    <!-- About Section -->
-    <section id="about">
-        <div class="container">
-            <h2>About Me</h2>
-            <div class="about-content">
-                <p>
-                    I am a passionate B-Tech student at Jain University, Bengaluru, currently in my 2nd year. 
-                    I have a strong interest in Web Development and Machine Learning. I love creating beautiful 
-                    and functional websites with advanced UI features. My goal is to build innovative solutions 
-                    that combine technical expertise with creative design.
-                </p>
+            <div class="hero-content">
+                <h2>Welcome to Our Product Store</h2>
+                <p>Discover amazing products and book them instantly!</p>
+                <a href="#products" class="btn">Browse Products</a>
             </div>
         </div>
     </section>
 
-    <!-- Skills Section -->
-    <section id="skills">
+    <!-- Products Section -->
+    <section id="products" class="products-section">
         <div class="container">
-            <h2>Skills</h2>
-            <div class="skills-container">
-                <div class="skill-card">Web Development</div>
-                <div class="skill-card">Machine Learning</div>
-                <div class="skill-card">HTML</div>
-                <div class="skill-card">CSS</div>
-                <div class="skill-card">JavaScript</div>
-                <div class="skill-card">Python</div>
-            </div>
-        </div>
-    </section>
+            <h2>Our Products</h2>
+            <div class="products-grid">
+                <!-- Product 1 -->
+                <div class="product-card">
+                    <div class="product-image">
 
-    <!-- Education Section -->
-    <section id="education">
-        <div class="container">
-            <h2>Education</h2>
-            <div class="education-card">
-                <h3>Bachelor of Technology (B-Tech)</h3>
-                <p class="institution">Jain University, Bengaluru</p>
-                <p class="year">2nd Year</p>
-            </div>
-        </div>
-    </section>
+                        <img src="https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=300" alt="Premium Product">
 
-    <!-- Projects Section -->
-    <section id="projects">
-        <div class="container">
-            <h2>Projects</h2>
-            <div class="projects-grid">
-                <div class="project-card">
-                    <h3>Website Development with Advance UI Features</h3>
-                    <p>
-                        Developed websites with modern and advanced user interface features, focusing on 
-                        responsive design, smooth animations, and intuitive user experience. Utilized 
-                        modern web technologies to create visually appealing and functional web applications.
-                    </p>
+                    </div>
+                    <div class="product-info">
+                        <h3>Premium Product</h3>
+                        <p class="description">High quality product with amazing features</p>
+                        <p class="price">$99.99</p>
+                        <button class="btn-add-cart" onclick="addToCart('Premium Product', 99.99)">Add to Cart</button>
+                        <button class="btn-book" onclick="bookProduct('Premium Product', 99.99)">Book Now</button>
+                    </div>
                 </div>
+
+                <!-- Product 2 -->
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=300" alt="Standard Product">
+
+                    </div>
+                    <div class="product-info">
+                        <h3>Standard Product</h3>
+                        <p class="description">Great value for everyday use</p>
+                        <p class="price">$49.99</p>
+                        <button class="btn-add-cart" onclick="addToCart('Standard Product', 49.99)">Add to Cart</button>
+                        <button class="btn-book" onclick="bookProduct('Standard Product', 49.99)">Book Now</button>
+                    </div>
+                </div>
+
+                <!-- Product 3 -->
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="https://source.unsplash.com/300x200/?product&sig=3" alt="Basic Product">
+
+                    </div>
+                    <div class="product-info">
+                        <h3>Basic Product</h3>
+                        <p class="description">Simple and affordable solution</p>
+                        <p class="price">$29.99</p>
+                        <button class="btn-add-cart" onclick="addToCart('Basic Product', 29.99)">Add to Cart</button>
+                        <button class="btn-book" onclick="bookProduct('Basic Product', 29.99)">Book Now</button>
+                    </div>
+                </div>
+
+                <!-- Product 4 -->
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="https://source.unsplash.com/300x200/?online-store&sig=4" alt="Deluxe Package">
+
+                    </div>
+                    <div class="product-info">
+                        <h3>Deluxe Package</h3>
+                        <p class="description">Complete package with all features</p>
+                        <p class="price">$199.99</p>
+                        <button class="btn-add-cart" onclick="addToCart('Deluxe Package', 199.99)">Add to Cart</button>
+                        <button class="btn-book" onclick="bookProduct('Deluxe Package', 199.99)">Book Now</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Booking Section -->
+    <section id="booking" class="booking-section">
+        <div class="container">
+            <h2>Book Your Product</h2>
+            <form id="booking-form" onsubmit="submitBooking(event)">
+                <div class="form-group">
+                    <label for="name">Full Name:</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="phone">Phone:</label>
+                    <input type="tel" id="phone" name="phone" required>
+                </div>
+                <div class="form-group">
+                    <label for="product">Select Product:</label>
+                    <select id="product" name="product" required>
+                        <option value="">-- Select a Product --</option>
+                        <option value="Premium Product - $99.99">Premium Product - $99.99</option>
+                        <option value="Standard Product - $49.99">Standard Product - $49.99</option>
+                        <option value="Basic Product - $29.99">Basic Product - $29.99</option>
+                        <option value="Deluxe Package - $199.99">Deluxe Package - $199.99</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="quantity">Quantity:</label>
+                    <input type="number" id="quantity" name="quantity" min="1" value="1" required>
+                </div>
+                <div class="form-group">
+                    <label for="address">Delivery Address:</label>
+                    <textarea id="address" name="address" rows="4" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="date">Preferred Delivery Date:</label>
+                    <input type="date" id="date" name="date" required>
+                </div>
+                <button type="submit" class="btn-submit">Confirm Booking</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Shopping Cart Section -->
+    <section id="cart" class="cart-section">
+        <div class="container">
+            <h2>Shopping Cart</h2>
+            <div id="cart-items">
+                <p>Your cart is empty</p>
+            </div>
+            <div class="cart-total">
+                <h3>Total: $<span id="cart-total">0.00</span></h3>
+                <button class="btn-checkout" onclick="checkout()">Proceed to Checkout</button>
+                <button class="btn-clear" onclick="clearCart()">Clear Cart</button>
             </div>
         </div>
     </section>
@@ -93,19 +169,19 @@
     <!-- Contact Section -->
     <section id="contact" class="contact-section">
         <div class="container">
-            <h2>Contact Me</h2>
-            <div class="contact-container">
+            <h2>Contact Us</h2>
+            <div class="contact-info">
                 <div class="contact-item">
-                    <strong>Email:</strong>
-                    <a href="mailto:jyotshna68669@gmail.com">jyotshna68669@gmail.com</a>
+                    <h3>Email</h3>
+                    <p>info@productstore.com</p>
                 </div>
                 <div class="contact-item">
-                    <strong>Phone:</strong>
-                    <a href="tel:8660398921">8660398921</a>
+                    <h3>Phone</h3>
+                    <p>+1 234 567 890</p>
                 </div>
                 <div class="contact-item">
-                    <strong>Location:</strong>
-                    <span>Jain University, Bengaluru</span>
+                    <h3>Address</h3>
+                    <p>123 Store Street, City, Country</p>
                 </div>
             </div>
         </div>
@@ -114,8 +190,72 @@
     <!-- Footer -->
     <footer>
         <div class="container">
-            <p>&copy; 2024 Jyotshna Shree. All Rights Reserved.</p>
+            <p>&copy; 2024 ProductStore. All Rights Reserved.</p>
         </div>
     </footer>
+
+    <script>
+        // Cart functionality
+        let cart = [];
+
+        function addToCart(productName, price) {
+            cart.push({ name: productName, price: price });
+            updateCartDisplay();
+            alert(productName + ' added to cart!');
+        }
+
+        function bookProduct(productName, price) {
+            document.getElementById('product').value = productName + ' - $' + price.toFixed(2);
+            document.getElementById('booking').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function updateCartDisplay() {
+            const cartItems = document.getElementById('cart-items');
+            const cartTotal = document.getElementById('cart-total');
+            const cartCount = document.getElementById('cart-count');
+
+            cartCount.textContent = cart.length;
+
+            if (cart.length === 0) {
+                cartItems.innerHTML = '<p>Your cart is empty</p>';
+                cartTotal.textContent = '0.00';
+            } else {
+                let itemsHTML = '<ul>';
+                let total = 0;
+                cart.forEach((item, index) => {
+                    itemsHTML += '<li>' + item.name + ' - $' + item.price.toFixed(2) + ' <button onclick="removeFromCart(' + index + ')">Remove</button></li>';
+                    total += item.price;
+                });
+                itemsHTML += '</ul>';
+                cartItems.innerHTML = itemsHTML;
+                cartTotal.textContent = total.toFixed(2);
+            }
+        }
+
+        function removeFromCart(index) {
+            cart.splice(index, 1);
+            updateCartDisplay();
+        }
+
+        function clearCart() {
+            cart = [];
+            updateCartDisplay();
+        }
+
+        function checkout() {
+            if (cart.length === 0) {
+                alert('Your cart is empty!');
+                return;
+            }
+            alert('Thank you for your purchase! Total: $' + document.getElementById('cart-total').textContent);
+            clearCart();
+        }
+
+        function submitBooking(event) {
+            event.preventDefault();
+            alert('Booking confirmed! We will contact you shortly.');
+            document.getElementById('booking-form').reset();
+        }
+    </script>
 </body>
 </html>

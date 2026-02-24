@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Funky Neo-Brutalist Calculator</title>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+    <style>
+        /* --- Funky Striped Background --- */
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: 'Space Grotesk', sans-serif;
+            background: repeating-linear-gradient(
+                45deg,
+                #ff9a9e,
+                #ff9a9e 20px,
+                #fecfef 20px,
+                #fecfef 40px
+            );
+        }
+
+        /* --- Chunky Calculator Body --- */
+        .calculator {
+            background-color: #ffea00; /* Bright Cyber Yellow */
+            border: 5px solid #000000;
+            border-radius: 16px;
+            /* Solid offset shadow for the brutalist effect */
+            box-shadow: 12px 12px 0px #000000;
+            padding: 30px 25px;
+            width: 320px;
+        }
+
+        /* --- Display Screen --- */
+        .display-container {
+            margin-bottom: 25px;
+        }
+
+        .display {
+            width: 100%;
+            background-color: #ffffff;
+            color: #000000;
+            font-size: 3rem;
+            font-weight: 700;
+            text-align: right;
+            border: 4px solid #000000;
+            border-radius: 8px;
+            padding: 10px 15px;
+            box-sizing: border-box;
+            outline: none;
+            font-family: 'Space Grotesk', sans-serif;
+            box-shadow: inset 4px 4px 0px rgba(0, 0, 0, 0.1); /* Inner shadow */
+        }
+
+        /* --- Button Grid Layout --- */
+        .buttons {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+        }
+
+        /* --- Funky Buttons --- */
+        button {
+            padding: 15px 0;
+            font-size: 1.5rem;
+            font-weight: 700;
+            font-family: 'Space Grotesk', sans-serif;
+            border: 4px solid #000000;
+            border-radius: 8px;
+            cursor: pointer;
+            background-color: #00e5ff; /* Cyan for number keys */
+            color: #000000;
+            transition: all 0.1s ease;
+            box-shadow: 4px 4px 0px #000000; /* Solid button shadow */
+        }
+
+        /* Hover Effect */
+        button:hover {
+            filter: brightness(1.1);
+        }
+
+        /* Click Animation - compresses the shadow to look like a physical press */
+        button:active {
+            transform: translate(4px, 4px);
+            box-shadow: 0px 0px 0px #000000;
+        }
+
+        /* --- Specific Button Colors --- */
+        /* Operators (+, -, *, /, %) */
+        .operator {
+            background-color: #ff007f; /* Hot Pink */
+            color: #ffffff;
+        }
+
+        /* Clear (C) */
+        .clear {
+            background-color: #00ff41; /* Toxic Green */
+            /* Removed grid-column: span 3 so it only takes 1 space now */
+        }
+
+        /* Delete (DEL) */
+        .delete {
+            background-color: #ff6a00; /* Bright Orange */
+            color: #000000;
+        }
+
+        /* Equals (=) */
+        .equals {
+            background-color: #b000ff; /* Electric Purple */
+            color: #ffffff;
+        }
+
+        /* Zero */
+        .zero {
+            grid-column: span 2;
+            background-color: #00e5ff;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="calculator">
+        <div class="display-container">
+            <input type="text" class="display" id="display" disabled placeholder="0">
+        </div>
+        
+        <div class="buttons">
+            <button class="clear" onclick="clearDisplay()">C</button>
+            <button class="delete" onclick="deleteLast()">DEL</button>
+            <button class="operator" onclick="appendValue('%')">%</button>
+            <button class="operator" onclick="appendValue('/')">÷</button>
+            
+            <button onclick="appendValue('7')">7</button>
+            <button onclick="appendValue('8')">8</button>
+            <button onclick="appendValue('9')">9</button>
+            <button class="operator" onclick="appendValue('*')">×</button>
+            
+            <button onclick="appendValue('4')">4</button>
+            <button onclick="appendValue('5')">5</button>
+            <button onclick="appendValue('6')">6</button>
+            <button class="operator" onclick="appendValue('-')">−</button>
+            
+            <button onclick="appendValue('1')">1</button>
+            <button onclick="appendValue('2')">2</button>
+            <button onclick="appendValue('3')">3</button>
+            <button class="operator" onclick="appendValue('+')">+</button>
+            
+            <button class="zero" onclick="appendValue('0')">0</button>
+            <button onclick="appendValue('.')">.</button>
+            <button class="equals" onclick="calculate()">=</button>
+        </div>
+    </div>
+
+    <script>
+        const display = document.getElementById('display');
+
+        function appendValue(value) {
+            // Clear the screen first if it's currently showing an error
+            if (display.value === 'NOPE') clearDisplay();
+            display.value += value;
+        }
+
+        function clearDisplay() {
+            display.value = '';
+        }
+
+        // Added the delete function back!
+        function deleteLast() {
+            if (display.value === 'NOPE') {
+                clearDisplay();
+            } else {
+                display.value = display.value.slice(0, -1);
+            }
+        }
+
+        function calculate() {
+            try {
+                if (display.value === '') return;
+                
+                let expression = display.value;
+                let result = new Function('return ' + expression)();
+                
+                // Format the result to avoid weird long decimals
+                display.value = Math.round(result * 100000000) / 100000000;
+            } catch (error) {
+                display.value = 'NOPE'; // Funky error message
+                setTimeout(clearDisplay, 1500);
+            }
+        }
+    </script>
+
+</body>
+</html>

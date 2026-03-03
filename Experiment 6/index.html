@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Advanced Registration Form</title>
+
+<style>
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 20px;
+    min-height: 100vh;
+    overflow-x: hidden;
+
+    /* Violet Animated Gradient Background */
+    background: linear-gradient(-45deg, #6a0dad, #8a2be2, #9370db, #4b0082);
+    background-size: 400% 400%;
+    animation: gradientMove 12s ease infinite;
+    color: white;
+}
+
+/* Background Animation */
+@keyframes gradientMove {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* Floating Glow Circles */
+body::before, body::after {
+    content: "";
+    position: fixed;
+    width: 350px;
+    height: 350px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.15);
+    filter: blur(80px);
+    z-index: -1;
+}
+
+body::before {
+    top: -100px;
+    left: -100px;
+}
+
+body::after {
+    bottom: -100px;
+    right: -100px;
+}
+
+h2 {
+    text-align: center;
+}
+
+/* FORM (UNCHANGED WHITE) */
+form {
+    background: white;
+    color: black;
+    padding: 25px;
+    width: 500px;
+    margin: auto;
+    border-radius: 15px;
+    box-shadow: 0 0 25px rgba(0,0,0,0.4);
+    animation: slideUp 0.8s ease;
+}
+
+/* Slide Animation */
+@keyframes slideUp {
+    from { transform: translateY(60px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+label {
+    font-weight: bold;
+}
+
+input, select, textarea {
+    width: 100%;
+    padding: 8px;
+    margin: 5px 0 15px 0;
+    border-radius: 5px;
+    border: 1px solid gray;
+    transition: 0.3s;
+}
+
+input:focus, select:focus, textarea:focus {
+    border-color: #8a2be2;
+    box-shadow: 0 0 10px #8a2be2;
+    outline: none;
+}
+
+.inline {
+    width: auto;
+}
+
+button {
+    padding: 10px;
+    margin-top: 10px;
+    width: 48%;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.submitBtn {
+    background: #28a745;
+    color: white;
+}
+
+.resetBtn {
+    background: #dc3545;
+    color: white;
+}
+
+button:hover {
+    transform: scale(1.08);
+    opacity: 0.9;
+}
+
+/* Output */
+#output {
+    margin-top: 30px;
+    background: white;
+    color: black;
+    padding: 20px;
+    width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 15px;
+    display: none;
+    animation: fadeIn 0.8s ease-in;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.success {
+    color: #6a0dad;
+    font-weight: bold;
+    font-size: 18px;
+}
+</style>
+</head>
+
+<body>
+
+<h2>💜 Advanced Registration Form</h2>
+
+<form id="regForm">
+
+<label>Full Name:</label>
+<input type="text" id="name" required>
+
+<label>Email:</label>
+<input type="email" id="email" required>
+
+<label>Password:</label>
+<input type="password" id="password" minlength="6" required>
+
+<label>Phone Number:</label>
+<input type="tel" id="phone" pattern="[0-9]{10}" placeholder="10-digit number" required>
+
+<label>Age:</label>
+<input type="number" id="age" min="1" max="100">
+
+<label>Date of Birth:</label>
+<input type="date" id="dob">
+
+<label>Gender:</label><br>
+<input type="radio" name="gender" value="Male" class="inline"> Male
+<input type="radio" name="gender" value="Female" class="inline"> Female
+<input type="radio" name="gender" value="Other" class="inline"> Other
+<br><br>
+
+<label>Hobbies:</label><br>
+<input type="checkbox" value="Reading" class="hobby inline"> Reading
+<input type="checkbox" value="Sports" class="hobby inline"> Sports
+<input type="checkbox" value="Music" class="hobby inline"> Music
+<input type="checkbox" value="Traveling" class="hobby inline"> Traveling
+<br><br>
+
+<label>Skills:</label>
+<select id="skills" multiple>
+<option>HTML</option>
+<option>CSS</option>
+<option>JavaScript</option>
+<option>Python</option>
+<option>Java</option>
+</select>
+
+<label>Education Level:</label>
+<select id="education">
+<option>High School</option>
+<option>Diploma</option>
+<option>Undergraduate</option>
+<option>Postgraduate</option>
+<option>PhD</option>
+</select>
+
+<label>Upload Profile Photo:</label>
+<input type="file" id="photo">
+
+<label>Experience Level (0-10 years):</label>
+<input type="range" id="experience" min="0" max="10">
+
+<label>Address:</label>
+<textarea id="address"></textarea>
+
+<input type="checkbox" id="terms" required class="inline">
+I agree to Terms & Conditions
+<br><br>
+
+<button type="button" class="submitBtn" onclick="printData()">Submit</button>
+<button type="reset" class="resetBtn">Reset</button>
+
+</form>
+
+<div id="output"></div>
+
+<script>
+function printData() {
+
+    if(!document.getElementById("regForm").checkValidity()){
+        alert("Please fill all required fields correctly!");
+        return;
+    }
+
+    let name = document.getElementById("name").value;
+    let email = document.getElementById("email").value;
+    let phone = document.getElementById("phone").value;
+    let age = document.getElementById("age").value;
+    let dob = document.getElementById("dob").value;
+    let education = document.getElementById("education").value;
+    let address = document.getElementById("address").value;
+    let experience = document.getElementById("experience").value;
+
+    let gender = document.querySelector('input[name="gender"]:checked');
+    gender = gender ? gender.value : "Not selected";
+
+    let hobbies = document.querySelectorAll(".hobby:checked");
+    let hobbyList = [];
+    hobbies.forEach(h => hobbyList.push(h.value));
+
+    let skills = Array.from(document.getElementById("skills").selectedOptions).map(s => s.value);
+
+    let outputDiv = document.getElementById("output");
+    outputDiv.style.display = "block";
+
+    outputDiv.innerHTML = `
+        <h3 class="success">🎉 Registration Successful!</h3>
+        <p><b>Name:</b> ${name}</p>
+        <p><b>Email:</b> ${email}</p>
+        <p><b>Phone:</b> ${phone}</p>
+        <p><b>Age:</b> ${age}</p>
+        <p><b>DOB:</b> ${dob}</p>
+        <p><b>Gender:</b> ${gender}</p>
+        <p><b>Hobbies:</b> ${hobbyList.join(", ")}</p>
+        <p><b>Skills:</b> ${skills.join(", ")}</p>
+        <p><b>Education:</b> ${education}</p>
+        <p><b>Experience:</b> ${experience} Years</p>
+        <p><b>Address:</b> ${address}</p>
+    `;
+
+    outputDiv.scrollIntoView({ behavior: "smooth" });
+}
+</script>
+
+</body>
+</html>

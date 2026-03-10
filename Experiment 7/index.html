@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Advanced Registration Form</title>
+
+<style>
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 20px;
+    min-height: 100vh;
+    background: linear-gradient(-45deg, #6a0dad, #8a2be2, #9370db, #4b0082);
+    background-size: 400% 400%;
+    animation: gradientMove 12s ease infinite;
+    color: white;
+}
+
+@keyframes gradientMove {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+h2 { text-align: center; }
+
+form {
+    background: white;
+    color: black;
+    padding: 25px;
+    width: 500px;
+    margin: auto;
+    border-radius: 15px;
+    box-shadow: 0 0 25px rgba(0,0,0,0.4);
+}
+
+input, select, textarea {
+    width: 100%;
+    padding: 8px;
+    margin: 5px 0 15px 0;
+    border-radius: 5px;
+    border: 1px solid gray;
+}
+
+.inline { width: auto; }
+
+button {
+    padding: 8px 12px;
+    margin: 5px 3px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.submitBtn { background: #28a745; color: white; }
+.resetBtn { background: #dc3545; color: white; }
+.copyBtn { background: #ff9800; color: white; }
+.downloadBtn { background: #2196f3; color: white; }
+
+table {
+    width: 95%;
+    margin: 30px auto;
+    border-collapse: collapse;
+    background: white;
+    color: black;
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: center;
+}
+
+th {
+    background: #8a2be2;
+    color: white;
+}
+</style>
+</head>
+
+<body>
+
+<h2>💜 Advanced Registration Form</h2>
+
+<form id="regForm">
+
+<input type="text" id="name" placeholder="Full Name" required>
+<input type="email" id="email" placeholder="Email" required>
+<input type="tel" id="phone" pattern="[0-9]{10}" placeholder="Phone (10 digits)" required>
+<input type="number" id="age" placeholder="Age">
+<input type="date" id="dob">
+
+<label>Gender:</label><br>
+<input type="radio" name="gender" value="Male" class="inline"> Male
+<input type="radio" name="gender" value="Female" class="inline"> Female
+<input type="radio" name="gender" value="Other" class="inline"> Other
+<br><br>
+
+<label>Hobbies:</label><br>
+<input type="checkbox" value="Reading" class="hobby inline"> Reading
+<input type="checkbox" value="Sports" class="hobby inline"> Sports
+<input type="checkbox" value="Music" class="hobby inline"> Music
+<input type="checkbox" value="Traveling" class="hobby inline"> Traveling
+<br><br>
+
+<select id="education">
+<option>High School</option>
+<option>Diploma</option>
+<option>Undergraduate</option>
+<option>Postgraduate</option>
+<option>PhD</option>
+</select>
+
+<textarea id="address" placeholder="Address"></textarea>
+
+<button type="button" class="submitBtn" onclick="addData()">Submit</button>
+<button type="reset" class="resetBtn">Reset</button>
+
+</form>
+
+<div style="text-align:center;">
+<button class="copyBtn" onclick="copyTable()">Copy</button>
+<button class="downloadBtn" onclick="downloadCSV()">Download CSV</button>
+</div>
+
+<div id="tableContainer"></div>
+
+<script>
+
+let registrations = [];
+
+function addData() {
+
+    if(!document.getElementById("regForm").checkValidity()){
+        alert("Please fill required fields correctly!");
+        return;
+    }
+
+    let gender = document.querySelector('input[name="gender"]:checked');
+    gender = gender ? gender.value : "";
+
+    let hobbies = document.querySelectorAll(".hobby:checked");
+    let hobbyList = [];
+    hobbies.forEach(h => hobbyList.push(h.value));
+
+    let data = {
+        name: name.value,
+        email: email.value,
+        phone: phone.value,
+        age: age.value,
+        dob: dob.value,
+        gender: gender,
+        hobbies: hobbyList.join(", "),
+        education: education.value,
+        address: address.value
+    };
+
+    registrations.push(data);
+    displayTable();
+    document.getElementById("regForm").reset();
+}
+
+function displayTable() {
+
+    let tableHTML = `
+    <table id="dataTable">
+        <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th>Age</th>
+            <th>DOB</th>
+            <th>Gender</th>
+            <th>Hobbies</th>
+            <th>Education</th>
+            <th>Address</th>
+        </tr>
+    `;
+
+    registrations.forEach(row => {
+        tableHTML += `
+        <tr>
+            <td>${row.name}</td>
+            <td>${row.email}</td>
+            <td>${row.phone}</td>
+            <td>${row.age}</td>
+            <td>${row.dob}</td>
+            <td>${row.gender}</td>
+            <td>${row.hobbies}</td>
+            <td>${row.education}</td>
+            <td>${row.address}</td>
+        </tr>
+        `;
+    });
+
+    tableHTML += "</table>";
+
+    document.getElementById("tableContainer").innerHTML = tableHTML;
+}
+
+function copyTable() {
+
+    let table = document.getElementById("dataTable");
+    if(!table) return alert("No data to copy!");
+
+    let range = document.createRange();
+    range.selectNode(table);
+    window.getSelection().removeAllRanges();
+    window.getSelection().addRange(range);
+    document.execCommand("copy");
+    window.getSelection().removeAllRanges();
+
+    alert("Table copied successfully!");
+}
+
+function downloadCSV() {
+
+    if(registrations.length === 0){
+        alert("No data to download!");
+        return;
+    }
+
+    let csv = "Name,Email,Phone,Age,DOB,Gender,Hobbies,Education,Address\n";
+
+    registrations.forEach(row => {
+        csv += `${row.name},${row.email},${row.phone},${row.age},${row.dob},${row.gender},"${row.hobbies}",${row.education},"${row.address}"\n`;
+    });
+
+    let blob = new Blob([csv], { type: "text/csv" });
+    let url = window.URL.createObjectURL(blob);
+
+    let a = document.createElement("a");
+    a.href = url;
+    a.download = "registrations.csv";
+    a.click();
+
+    window.URL.revokeObjectURL(url);
+}
+
+</script>
+
+</body>
+</html>
